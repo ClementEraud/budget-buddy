@@ -576,6 +576,7 @@ dependencies = [
  "env_logger",
  "log",
  "serde",
+ "ui",
  "wasm-bindgen-futures",
  "web-sys",
  "winit",
@@ -2780,6 +2781,10 @@ dependencies = [
 [[package]]
 name = "ui"
 version = "0.1.0"
+dependencies = [
+ "eframe",
+ "egui",
+]
 
 [[package]]
 name = "unicode-bidi"
