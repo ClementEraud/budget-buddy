@@ -49,7 +49,7 @@ fn main() {
             .start(
                 canvas,
                 web_options,
-                Box::new(|cc| Ok(Box::new(budget_buddy::TemplateApp::new(cc)))),
+                Box::new(|cc| Ok(Box::new(ui::TemplateApp::new(cc)))),
             )
             .await;
 
