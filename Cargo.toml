@@ -1,6 +1,7 @@
 [workspace]
 
 members = ["main", "ui"]
+resolver = "2"
 
 [profile.release]
 opt-level = 2 # fast and small wasm
