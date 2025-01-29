@@ -7,6 +7,8 @@ pub mod components {
     use crate::{app::View, TemplateApp};
     use egui::Context;
 
+    pub struct Component {}
+
     pub fn top_bar(ctx: &Context) -> egui::InnerResponse<()> {
         egui::TopBottomPanel::top("top_panel").show(ctx, |ui| {
             egui::menu::bar(ui, |ui| {
