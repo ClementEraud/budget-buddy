@@ -1,4 +1,4 @@
 pub mod app;
+mod home;
 mod login_view;
-mod logout_view;
 mod top_bar;

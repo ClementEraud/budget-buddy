@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+egui_extras = { version = "0.30.0", features = ["all_loaders"] }
 egui = "0.30"
 eframe = { version = "0.30", default-features = false, features = [
     "accesskit",     # Make egui compatible with screen readers. NOTE: adds a lot of dependencies.
