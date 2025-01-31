@@ -1,4 +1,3 @@
 pub mod app;
-mod home;
-mod login_view;
-mod top_bar;
+mod components;
+mod views;

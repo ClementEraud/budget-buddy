@@ -1,13 +1,7 @@
-use crate::home::Home;
-use crate::login_view::LoginView;
-
-use crate::top_bar::TopBar;
-
-#[derive(Debug, PartialEq)]
-pub enum View {
-    Login,
-    Home,
-}
+use crate::{
+    components::top_bar::TopBar,
+    views::{home::Home, login::Login, View},
+};
 
 #[derive(Debug)]
 pub struct App {
@@ -46,7 +40,7 @@ impl eframe::App for App {
         TopBar::build(ctx, self);
         match &self.current_view {
             View::Login => {
-                LoginView::build(ctx, self);
+                Login::build(ctx, self);
             }
             View::Home => {
                 Home::build(ctx, self);

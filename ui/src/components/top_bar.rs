@@ -1,5 +1,5 @@
-use crate::app::{App, View};
-use egui::Context;
+use crate::{app::App, views::View};
+use egui::{Button, Context};
 
 pub struct TopBar {}
 
@@ -19,13 +19,16 @@ impl TopBar {
                 }
 
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::TOP), |ui| {
-                    egui::widgets::global_theme_preference_switch(ui);
-
                     if app.current_view() != &View::Login {
-                        if ui.button("Logout").clicked() {
+                        let image =
+                            egui::Image::new(egui::include_image!("../../../assets/logout.png"));
+                        let logout_btn = ui.add(Button::image(image).small());
+                        if logout_btn.clicked() {
                             app.navigate(View::Login);
                         }
                     }
+
+                    egui::widgets::global_theme_preference_switch(ui);
                 })
             });
         })
