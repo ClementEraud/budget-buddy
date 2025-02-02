@@ -1,6 +1,9 @@
+use avatar::Avatar;
 use egui::{include_image, Context, FontId, RichText};
 
-use crate::{app::App, components::avatar::Avatar};
+use crate::app::App;
+
+mod avatar;
 
 pub struct Login {}
 

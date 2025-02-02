@@ -1,7 +1,8 @@
-use crate::{
-    components::top_bar::TopBar,
-    views::{home::Home, login::Login, View},
-};
+use top_bar::TopBar;
+
+use crate::views::{home::Home, login::Login, View};
+
+mod top_bar;
 
 #[derive(Debug)]
 pub struct App {
