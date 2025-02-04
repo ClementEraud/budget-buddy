@@ -1,3 +1,4 @@
+use egui::CentralPanel;
 use top_bar::TopBar;
 
 use crate::views::{home::Home, login::Login, View};
@@ -39,13 +40,14 @@ impl eframe::App for App {
     /// Called each time the UI needs repainting, which may be many times per second.
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         TopBar::build(ctx, self);
-        match &self.current_view {
+
+        CentralPanel::default().show(ctx, |ui| match &self.current_view {
             View::Login => {
-                Login::build(ctx, self);
+                Login::build(ui, self);
             }
             View::Home => {
-                Home::build(ctx, self);
+                Home::build(ui, self);
             }
-        }
+        });
     }
 }

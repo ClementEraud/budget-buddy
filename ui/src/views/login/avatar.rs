@@ -13,7 +13,7 @@ impl<'a> Avatar<'a> {
     }
 
     pub fn build(self, ui: &mut Ui, app: &mut App) {
-        ui.vertical(|ui| {
+        ui.vertical_centered_justified(|ui| {
             let btn = ui.add(
                 Image::new(self.img_src)
                     .fit_to_exact_size(Vec2 { x: 150.0, y: 150.0 })
@@ -23,10 +23,7 @@ impl<'a> Avatar<'a> {
                 app.navigate(View::Home);
             }
 
-            ui.horizontal(|ui| {
-                ui.add_space(20.0);
-                ui.label(RichText::new(self.name).font(FontId::proportional(20.0)));
-            });
+            ui.label(RichText::new(self.name).font(FontId::proportional(20.0)));
         });
     }
 }

@@ -1,5 +1,5 @@
 use balance::Balance;
-use egui::{Color32, FontId, Frame, Grid, RichText, Stroke, Ui, Vec2};
+use egui::{Align, Color32, FontId, Frame, Grid, Layout, RichText, Stroke, Ui, Vec2};
 use expenses::Expenses;
 use incomes::Incomes;
 
@@ -22,10 +22,9 @@ impl Container {
             .stroke(Stroke::new(1.0, Color32::BLACK))
             .rounding(5.0)
             .show(ui, |ui| {
-                ui.vertical_centered(|ui| {
-                    ui.add_space(20.0);
+                ui.with_layout(Layout::top_down_justified(Align::Center), |ui| {
                     ui.label(RichText::new(&self.label).font(FontId::proportional(20.0)));
-                    ui.add_space(20.0);
+                    ui.add_space(50.0);
 
                     Grid::new(format!("container {}", &self.label))
                         .max_col_width(ui.available_width() / 3.0)
