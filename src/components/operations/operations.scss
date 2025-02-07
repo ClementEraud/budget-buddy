@@ -1,0 +1,31 @@
+.transactions-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header {
+    border-bottom: 1px solid #514c4c;
+    padding-left: 10px;
+}
+
+.transactions {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+
+    li:first-of-type {
+        margin-top: 0;
+    }
+
+    li {
+        margin-top: 20px;
+    }
+}
+
+.total {
+    border-top: 1px solid #514c4c;
+    padding-left: 10px;
+}
