@@ -1,29 +1,11 @@
-// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+use domain::{array::Array, expense::Expense, income::Income};
+use infrastructure::controllers::queries::{
+    get_actual_expenses, get_balance, get_incomes, get_planned_expenses,
+};
 
-use operations::{Array, Expense, Income, Operations};
-use tauri::command;
-
-mod operations;
-
-#[command]
-fn get_balance() -> i32 {
-    Operations::new().get_balance()
-}
-
-#[command]
-fn get_incomes() -> Array<Income> {
-    Operations::new().get_incomes().clone()
-}
-
-#[command]
-fn get_planned_expenses() -> Array<Expense> {
-    Operations::new().get_planned_expenses()
-}
-
-#[command]
-fn get_actual_expenses() -> Array<Expense> {
-    Operations::new().get_actual_expenses()
-}
+mod application;
+mod domain;
+mod infrastructure;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
