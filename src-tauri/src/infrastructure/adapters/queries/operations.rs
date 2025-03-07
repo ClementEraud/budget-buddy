@@ -3,6 +3,7 @@ use crate::{
     domain::{array::Array, expense::Expense, income::Income, operations::Operations},
 };
 
+#[derive(Clone)]
 pub struct OperationsQueryRepository {}
 
 impl OperationsQueryRepositoryPort for OperationsQueryRepository {
