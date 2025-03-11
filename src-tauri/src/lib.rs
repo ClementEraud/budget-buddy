@@ -22,7 +22,10 @@ pub struct Queries {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    tauri::Builder::default()
+    #[cfg(debug_assertions)] // only enable instrumentation in development builds
+    let devtools = tauri_plugin_devtools::init();
+
+    let mut builder = tauri::Builder::default()
         .setup(|app| {
             app.manage(Queries {
                 get_balance_query: GetBalanceQuery::new(OperationsQueryRepository::new()),
@@ -43,7 +46,14 @@ pub fn run() {
             get_incomes,
             get_planned_expenses,
             get_actual_expenses
-        ])
+        ]);
+
+    #[cfg(debug_assertions)]
+    {
+        builder = builder.plugin(devtools);
+    }
+
+    builder
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
