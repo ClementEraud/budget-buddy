@@ -14,7 +14,11 @@
         <Balance {balance} />
     {/await}
 
-    <Operations />
+    <Operations
+        incomes={data.incomes}
+        actualExpenses={data.actualExpenses}
+        plannedExpenses={data.plannedExpenses}
+    />
 </main>
 
 <style>

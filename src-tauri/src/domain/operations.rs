@@ -1,5 +1,6 @@
 use crate::{Array, Expense, Income};
 
+#[derive(Debug)]
 pub struct Operations {
     incomes: Array<Income>,
     planned_expenses: Array<Expense>,

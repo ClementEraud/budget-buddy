@@ -1,5 +1,13 @@
 <script lang="ts">
+    import type { Operations } from "../../../domain/types/operation";
+    import AsyncOperationList from "../AsyncOperationList.svelte";
     import "../operations.scss";
+
+    const {
+        plannedExpenses,
+    }: {
+        plannedExpenses: Promise<Operations>;
+    } = $props();
 </script>
 
 <div class="transactions-container">
@@ -7,14 +15,7 @@
         <h2>Planned</h2>
     </div>
     <div class="transactions">
-        <ul>
-            <li>Rent: 600€</li>
-            <li>Netflix: 20€</li>
-            <li>Internet: 50€</li>
-            <li>Mobile phone: 50€</li>
-            <li>Electricity: 80€</li>
-            <li>Other bills: 400€</li>
-        </ul>
+        <AsyncOperationList operationsPromise={plannedExpenses} />
     </div>
     <div class="total">
         <h2>Total: 1200€</h2>

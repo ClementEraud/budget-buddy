@@ -1,7 +1,16 @@
 <script lang="ts">
+    import type { Operations } from "../../domain/types/operation";
     import Actual from "./expenses/Actual.svelte";
     import Planned from "./expenses/Planned.svelte";
     import "./operations.scss";
+
+    const {
+        plannedExpenses,
+        actualExpenses,
+    }: {
+        plannedExpenses: Promise<Operations>;
+        actualExpenses: Promise<Operations>;
+    } = $props();
 </script>
 
 <div class="header">
@@ -9,10 +18,10 @@
 </div>
 <div class="expense-container">
     <div class="sub-container">
-        <Planned />
+        <Planned {plannedExpenses} />
     </div>
     <div class="sub-container">
-        <Actual />
+        <Actual {actualExpenses} />
     </div>
 </div>
 

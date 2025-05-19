@@ -1,5 +1,5 @@
 <script lang="ts">
-    let { balance } = $props();
+    let { balance }: { balance: number } = $props();
 
     const getCicleColorFromBalance = (balance: number) =>
         balance < 0 ? "red" : balance <= 100 ? "yellow" : "green";

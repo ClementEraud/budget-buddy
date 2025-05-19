@@ -2,7 +2,7 @@ use std::slice::Iter;
 
 use serde::Serialize;
 
-#[derive(Clone, Serialize)]
+#[derive(Clone, Serialize, Debug)]
 pub struct Array<T: Serialize> {
     items: Vec<T>,
 }

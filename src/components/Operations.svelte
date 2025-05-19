@@ -1,14 +1,25 @@
-<script>
+<script lang="ts">
     import Incomes from "./operations/Incomes.svelte";
     import Expenses from "./operations/Expenses.svelte";
+    import type { Operations } from "../domain/types/operation";
+
+    const {
+        incomes,
+        plannedExpenses,
+        actualExpenses,
+    }: {
+        incomes: Promise<Operations>;
+        plannedExpenses: Promise<Operations>;
+        actualExpenses: Promise<Operations>;
+    } = $props();
 </script>
 
 <div class="operations">
     <div class="operation-container incomes">
-        <Incomes />
+        <Incomes {incomes} />
     </div>
     <div class="operation-container expenses">
-        <Expenses />
+        <Expenses {plannedExpenses} {actualExpenses} />
     </div>
 </div>
 
