@@ -1,18 +1,18 @@
-use crate::application::ports::queries::operations::OperationsQueryRepositoryPort;
+use crate::application::ports::queries::account::AccountQueryRepositoryPort;
 
-pub struct GetBalanceQuery<T: OperationsQueryRepositoryPort> {
-    operations_query_repository: T,
+pub struct GetBalanceQuery<T: AccountQueryRepositoryPort> {
+    account_query_repository: T,
 }
 
-impl<T: OperationsQueryRepositoryPort> GetBalanceQuery<T> {
-    pub fn new(operations_query_repository: T) -> Self {
+impl<T: AccountQueryRepositoryPort> GetBalanceQuery<T> {
+    pub fn new(account_query_repository: T) -> Self {
         Self {
-            operations_query_repository,
+            account_query_repository,
         }
     }
 
     pub fn get_balance(&self) -> i32 {
-        let operations = &self.operations_query_repository.get_operations();
-        operations.get_balance()
+        let account = &self.account_query_repository.get_account();
+        account.get_balance()
     }
 }

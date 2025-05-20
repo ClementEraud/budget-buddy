@@ -1,0 +1,82 @@
+use crate::domain::aggregates::account::Account;
+use crate::domain::entities::operation::Operation;
+use crate::shared::types::array::Array;
+use crate::{
+    application::ports::queries::account::AccountQueryRepositoryPort,
+    domain::value_objects::{
+        expense_type::ExpenseType, income_type::IncomeType, operation_type::OperationType,
+    },
+};
+
+#[derive(Clone)]
+pub struct AccountQueryRepository {}
+
+impl AccountQueryRepositoryPort for AccountQueryRepository {
+    fn get_account(&self) -> Account {
+        Account::new(
+            String::from("1"),
+            Array::from_vec(vec![
+                Operation::new(
+                    String::from("1"),
+                    String::from("Salary"),
+                    1600,
+                    OperationType::Income(IncomeType::Salary),
+                ),
+                Operation::new(
+                    String::from("2"),
+                    String::from("Social Aids"),
+                    400,
+                    OperationType::Income(IncomeType::Other),
+                ),
+                Operation::new(
+                    String::from("3"),
+                    String::from("Rent"),
+                    600,
+                    OperationType::Expense(ExpenseType::Housing),
+                ),
+                Operation::new(
+                    String::from("4"),
+                    String::from("Netflix"),
+                    20,
+                    OperationType::Expense(ExpenseType::Entertainment),
+                ),
+                Operation::new(
+                    String::from("5"),
+                    String::from("Internet"),
+                    50,
+                    OperationType::Expense(ExpenseType::Entertainment),
+                ),
+                Operation::new(
+                    String::from("6"),
+                    String::from("Mobile phone"),
+                    50,
+                    OperationType::Expense(ExpenseType::Communication),
+                ),
+                Operation::new(
+                    String::from("7"),
+                    String::from("Electricity"),
+                    80,
+                    OperationType::Expense(ExpenseType::Utilities),
+                ),
+                Operation::new(
+                    String::from("8"),
+                    String::from("Other bills"),
+                    400,
+                    OperationType::Expense(ExpenseType::Utilities),
+                ),
+                Operation::new(
+                    String::from("9"),
+                    String::from("Groceries"),
+                    300,
+                    OperationType::Expense(ExpenseType::Food),
+                ),
+            ]),
+        )
+    }
+}
+
+impl AccountQueryRepository {
+    pub fn new() -> Self {
+        Self {}
+    }
+}

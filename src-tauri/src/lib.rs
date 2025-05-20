@@ -1,23 +1,21 @@
 use application::use_cases::queries::{
-    get_actual_expenses::GetActualExpensesQuery, get_balance::GetBalanceQuery,
-    get_incomes::GetIncomesQuery, get_planned_expenses::GetPlannedExpensesQuery,
+    get_balance::GetBalanceQuery, get_expenses::GetExpensesQuery, get_incomes::GetIncomesQuery,
 };
-use domain::{array::Array, expense::Expense, income::Income};
 use infrastructure::{
-    adapters::queries::operations::OperationsQueryRepository,
-    controllers::queries::{get_actual_expenses, get_balance, get_incomes, get_planned_expenses},
+    adapters::queries::account::AccountQueryRepository,
+    controllers::queries::{get_balance, get_expenses, get_incomes},
 };
 use tauri::Manager;
 
 mod application;
 mod domain;
 mod infrastructure;
+mod shared;
 
 pub struct Queries {
-    get_balance_query: GetBalanceQuery<OperationsQueryRepository>,
-    get_incomes_query: GetIncomesQuery<OperationsQueryRepository>,
-    get_actual_expenses_query: GetActualExpensesQuery<OperationsQueryRepository>,
-    get_planned_expenses_query: GetPlannedExpensesQuery<OperationsQueryRepository>,
+    get_balance_query: GetBalanceQuery<AccountQueryRepository>,
+    get_incomes_query: GetIncomesQuery<AccountQueryRepository>,
+    get_expenses_query: GetExpensesQuery<AccountQueryRepository>,
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -25,17 +23,13 @@ pub fn run() {
     #[cfg(debug_assertions)] // only enable instrumentation in development builds
     let devtools = tauri_plugin_devtools::init();
 
+    #[allow(unused_mut)]
     let mut builder = tauri::Builder::default()
         .setup(|app| {
             app.manage(Queries {
-                get_balance_query: GetBalanceQuery::new(OperationsQueryRepository::new()),
-                get_incomes_query: GetIncomesQuery::new(OperationsQueryRepository::new()),
-                get_actual_expenses_query: GetActualExpensesQuery::new(
-                    OperationsQueryRepository::new(),
-                ),
-                get_planned_expenses_query: GetPlannedExpensesQuery::new(
-                    OperationsQueryRepository::new(),
-                ),
+                get_balance_query: GetBalanceQuery::new(AccountQueryRepository::new()),
+                get_incomes_query: GetIncomesQuery::new(AccountQueryRepository::new()),
+                get_expenses_query: GetExpensesQuery::new(AccountQueryRepository::new()),
             });
 
             Ok(())
@@ -44,8 +38,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             get_balance,
             get_incomes,
-            get_planned_expenses,
-            get_actual_expenses
+            get_expenses,
         ]);
 
     #[cfg(debug_assertions)]

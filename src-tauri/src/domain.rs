@@ -1,4 +1,3 @@
-pub mod array;
-pub mod expense;
-pub mod income;
-pub mod operations;
+pub mod aggregates;
+pub mod entities;
+pub mod value_objects;
