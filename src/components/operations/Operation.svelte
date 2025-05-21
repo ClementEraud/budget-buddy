@@ -4,4 +4,4 @@
     const { operation }: { operation: Operation } = $props();
 </script>
 
-<li>{`${operation.label}: ${operation.value}€`}</li>
+<li>{`${operation.label}: ${operation.amount}€`}</li>

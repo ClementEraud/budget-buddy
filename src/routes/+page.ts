@@ -13,11 +13,6 @@ export const load: PageLoad = async () => {
   return {
     balance: invoke<ApiBalance>("get_balance"),
     incomes: invoke<ApiOperations>("get_incomes").then(transformToOperations),
-    plannedExpenses: invoke<ApiOperations>("get_planned_expenses").then(
-      transformToOperations,
-    ),
-    actualExpenses: invoke<ApiOperations>("get_actual_expenses").then(
-      transformToOperations,
-    ),
+    expenses: invoke<ApiOperations>("get_expenses").then(transformToOperations),
   };
 };

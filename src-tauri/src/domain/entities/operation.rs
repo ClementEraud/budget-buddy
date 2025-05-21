@@ -5,22 +5,22 @@ use serde::Serialize;
 pub struct Operation {
     pub id: String,
     pub label: String,
-    pub value: i32,
+    pub amount: i32,
     pub operation_type: OperationType,
 }
 
 impl Operation {
-    pub fn new(id: String, label: String, value: i32, operation_type: OperationType) -> Self {
+    pub fn new(id: String, label: String, amount: i32, operation_type: OperationType) -> Self {
         Self {
             id,
             label,
-            value,
+            amount,
             operation_type,
         }
     }
 
-    pub fn get_value(&self) -> &i32 {
-        &self.value
+    pub fn get_amount(&self) -> &i32 {
+        &self.amount
     }
 
     pub fn is_income(&self) -> bool {

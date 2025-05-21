@@ -24,7 +24,7 @@ impl Account {
         let mut total = 0;
 
         for income in self.get_incomes().iter() {
-            total += income.get_value()
+            total += income.get_amount()
         }
 
         return total;
@@ -34,7 +34,7 @@ impl Account {
         let mut total = 0;
 
         for expense in self.get_expenses().iter() {
-            total += expense.get_value()
+            total += expense.get_amount()
         }
 
         return total;

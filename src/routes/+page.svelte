@@ -1,7 +1,7 @@
 <script lang="ts">
     import Balance from "../components/Balance.svelte";
     import Header from "../components/Header.svelte";
-    import Operations from "../components/Operations.svelte";
+    import FinancialEntity from "../components/FinancialEntity.svelte";
     import type { PageProps } from "./$types";
 
     const { data }: PageProps = $props();
@@ -14,11 +14,18 @@
         <Balance {balance} />
     {/await}
 
-    <Operations
-        incomes={data.incomes}
-        actualExpenses={data.actualExpenses}
-        plannedExpenses={data.plannedExpenses}
-    />
+    <div class="financial-entities">
+        <FinancialEntity
+            title="Budget"
+            incomes={data.incomes}
+            expenses={data.expenses}
+        />
+        <FinancialEntity
+            title="Account"
+            incomes={data.incomes}
+            expenses={data.expenses}
+        />
+    </div>
 </main>
 
 <style>
@@ -26,5 +33,13 @@
         display: flex;
         flex-direction: column;
         height: 100vh;
+
+        .financial-entities {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+        }
     }
 </style>

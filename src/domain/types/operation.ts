@@ -1,6 +1,6 @@
 export interface Operation {
   label: string;
-  value: number;
+  amount: number;
 }
 
 export type Operations = Array<Operation>;
