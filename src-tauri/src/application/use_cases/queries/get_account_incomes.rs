@@ -3,11 +3,11 @@ use crate::{
     domain::entities::operation::Operation, shared::types::array::Array,
 };
 
-pub struct GetIncomesQuery<T: AccountQueryRepositoryPort> {
+pub struct GetAccountIncomesQuery<T: AccountQueryRepositoryPort> {
     account_query_repository: T,
 }
 
-impl<T: AccountQueryRepositoryPort> GetIncomesQuery<T> {
+impl<T: AccountQueryRepositoryPort> GetAccountIncomesQuery<T> {
     pub fn new(account_query_repository: T) -> Self {
         Self {
             account_query_repository,

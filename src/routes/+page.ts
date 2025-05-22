@@ -11,8 +11,12 @@ const transformToOperations = (data: ApiOperations): Operations => {
 
 export const load: PageLoad = async () => {
   return {
-    balance: invoke<ApiBalance>("get_balance"),
-    incomes: invoke<ApiOperations>("get_incomes").then(transformToOperations),
-    expenses: invoke<ApiOperations>("get_expenses").then(transformToOperations),
+    account_balance: invoke<ApiBalance>("get_account_balance"),
+    account_incomes: invoke<ApiOperations>("get_account_incomes").then(
+      transformToOperations,
+    ),
+    account_expenses: invoke<ApiOperations>("get_account_expenses").then(
+      transformToOperations,
+    ),
   };
 };

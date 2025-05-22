@@ -1,10 +1,10 @@
 use crate::application::ports::queries::account::AccountQueryRepositoryPort;
 
-pub struct GetBalanceQuery<T: AccountQueryRepositoryPort> {
+pub struct GetAccountBalanceQuery<T: AccountQueryRepositoryPort> {
     account_query_repository: T,
 }
 
-impl<T: AccountQueryRepositoryPort> GetBalanceQuery<T> {
+impl<T: AccountQueryRepositoryPort> GetAccountBalanceQuery<T> {
     pub fn new(account_query_repository: T) -> Self {
         Self {
             account_query_repository,

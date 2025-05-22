@@ -1,9 +1,10 @@
 use application::use_cases::queries::{
-    get_balance::GetBalanceQuery, get_expenses::GetExpensesQuery, get_incomes::GetIncomesQuery,
+    get_account_balance::GetAccountBalanceQuery, get_account_expenses::GetAccountExpensesQuery,
+    get_account_incomes::GetAccountIncomesQuery,
 };
 use infrastructure::{
     adapters::queries::account::AccountQueryRepository,
-    controllers::queries::{get_balance, get_expenses, get_incomes},
+    controllers::queries::{get_account_balance, get_account_expenses, get_account_incomes},
 };
 use tauri::Manager;
 
@@ -13,9 +14,9 @@ mod infrastructure;
 mod shared;
 
 pub struct Queries {
-    get_balance_query: GetBalanceQuery<AccountQueryRepository>,
-    get_incomes_query: GetIncomesQuery<AccountQueryRepository>,
-    get_expenses_query: GetExpensesQuery<AccountQueryRepository>,
+    get_account_balance_query: GetAccountBalanceQuery<AccountQueryRepository>,
+    get_account_incomes_query: GetAccountIncomesQuery<AccountQueryRepository>,
+    get_account_expenses_query: GetAccountExpensesQuery<AccountQueryRepository>,
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -27,18 +28,24 @@ pub fn run() {
     let mut builder = tauri::Builder::default()
         .setup(|app| {
             app.manage(Queries {
-                get_balance_query: GetBalanceQuery::new(AccountQueryRepository::new()),
-                get_incomes_query: GetIncomesQuery::new(AccountQueryRepository::new()),
-                get_expenses_query: GetExpensesQuery::new(AccountQueryRepository::new()),
+                get_account_balance_query: GetAccountBalanceQuery::new(
+                    AccountQueryRepository::new(),
+                ),
+                get_account_incomes_query: GetAccountIncomesQuery::new(
+                    AccountQueryRepository::new(),
+                ),
+                get_account_expenses_query: GetAccountExpensesQuery::new(
+                    AccountQueryRepository::new(),
+                ),
             });
 
             Ok(())
         })
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
-            get_balance,
-            get_incomes,
-            get_expenses,
+            get_account_balance,
+            get_account_expenses,
+            get_account_incomes,
         ]);
 
     #[cfg(debug_assertions)]

@@ -10,20 +10,18 @@
 <main class="container">
     <Header />
 
-    {#await data.balance then balance}
-        <Balance {balance} />
-    {/await}
-
     <div class="financial-entities">
         <FinancialEntity
             title="Budget"
-            incomes={data.incomes}
-            expenses={data.expenses}
+            balance={data.account_balance}
+            incomes={data.account_incomes}
+            expenses={data.account_expenses}
         />
         <FinancialEntity
             title="Account"
-            incomes={data.incomes}
-            expenses={data.expenses}
+            balance={data.account_balance}
+            incomes={data.account_incomes}
+            expenses={data.account_expenses}
         />
     </div>
 </main>
@@ -32,14 +30,14 @@
     .container {
         display: flex;
         flex-direction: column;
-        height: 100vh;
+        height: 90vh;
 
         .financial-entities {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
+            height: 100%;
         }
     }
 </style>

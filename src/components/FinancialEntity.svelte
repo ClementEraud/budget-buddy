@@ -1,20 +1,30 @@
 <script lang="ts">
     import type { Operations } from "../domain/types/operation";
+    import Balance from "./Balance.svelte";
     import OperationsComponent from "./operations/Operations.svelte";
 
     const {
         incomes,
         expenses,
         title,
+        balance,
     }: {
         incomes: Promise<Operations>;
         expenses: Promise<Operations>;
         title: string;
+        balance: Promise<number>;
     } = $props();
 </script>
 
 <div class="account-container">
     <h2>{title}</h2>
+
+    <div class="balance-container">
+        {#await balance then balanceFulfilled}
+            <Balance balance={balanceFulfilled} />
+        {/await}
+    </div>
+
     <div class="operations">
         <div class="operation-container incomes">
             <OperationsComponent title="Incomes" operations={incomes} />
@@ -27,13 +37,20 @@
 
 <style>
     .account-container {
-        margin-top: 10%;
         height: 100%;
         display: flex;
         flex-direction: column;
         width: 50%;
         justify-content: center;
         align-items: center;
+
+        h2 {
+            margin-bottom: 30px;
+        }
+
+        .balance-container {
+            margin-bottom: 30px;
+        }
 
         .operations {
             width: 100%;

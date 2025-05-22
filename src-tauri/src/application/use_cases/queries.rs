@@ -1,3 +1,3 @@
-pub mod get_balance;
-pub mod get_expenses;
-pub mod get_incomes;
+pub mod get_account_balance;
+pub mod get_account_expenses;
+pub mod get_account_incomes;
