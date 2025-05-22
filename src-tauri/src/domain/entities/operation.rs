@@ -5,12 +5,12 @@ use serde::Serialize;
 pub struct Operation {
     pub id: String,
     pub label: String,
-    pub amount: i32,
+    pub amount: f64,
     pub operation_type: OperationType,
 }
 
 impl Operation {
-    pub fn new(id: String, label: String, amount: i32, operation_type: OperationType) -> Self {
+    pub fn new(id: String, label: String, amount: f64, operation_type: OperationType) -> Self {
         Self {
             id,
             label,
@@ -19,7 +19,7 @@ impl Operation {
         }
     }
 
-    pub fn get_amount(&self) -> &i32 {
+    pub fn get_amount(&self) -> &f64 {
         &self.amount
     }
 

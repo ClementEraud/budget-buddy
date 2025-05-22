@@ -11,18 +11,11 @@
     <Header />
 
     <div class="financial-entities">
-        <FinancialEntity
-            title="Budget"
-            balance={data.account_balance}
-            incomes={data.account_incomes}
-            expenses={data.account_expenses}
-        />
-        <FinancialEntity
-            title="Account"
-            balance={data.account_balance}
-            incomes={data.account_incomes}
-            expenses={data.account_expenses}
-        />
+        {#await data.accountSummary then accountSummary}
+            <FinancialEntity title="Budget" summary={accountSummary} />
+
+            <FinancialEntity title="Account" summary={accountSummary} />
+        {/await}
     </div>
 </main>
 

@@ -1,18 +1,15 @@
 <script lang="ts">
     import type { Operations } from "../domain/types/operation";
+    import type { Summary } from "../domain/types/summary";
     import Balance from "./Balance.svelte";
     import OperationsComponent from "./operations/Operations.svelte";
 
     const {
-        incomes,
-        expenses,
+        summary,
         title,
-        balance,
     }: {
-        incomes: Promise<Operations>;
-        expenses: Promise<Operations>;
+        summary: Summary;
         title: string;
-        balance: Promise<number>;
     } = $props();
 </script>
 
@@ -20,17 +17,23 @@
     <h2>{title}</h2>
 
     <div class="balance-container">
-        {#await balance then balanceFulfilled}
-            <Balance balance={balanceFulfilled} />
-        {/await}
+        <Balance balance={summary.balance} />
     </div>
 
     <div class="operations">
         <div class="operation-container incomes">
-            <OperationsComponent title="Incomes" operations={incomes} />
+            <OperationsComponent
+                title="Incomes"
+                operations={summary.incomes}
+                total={summary.totalIncome}
+            />
         </div>
         <div class="operation-container expenses">
-            <OperationsComponent title="Expenses" operations={expenses} />
+            <OperationsComponent
+                title="Expenses"
+                operations={summary.expenses}
+                total={summary.totalExpense}
+            />
         </div>
     </div>
 </div>
