@@ -1,8 +1,8 @@
 use std::slice::Iter;
 
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Serialize, Debug)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Array<T: Serialize> {
     items: Vec<T>,
 }

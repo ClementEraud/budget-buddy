@@ -1,2 +1,2 @@
-pub mod account;
-pub mod budget;
+pub mod commands;
+pub mod queries;

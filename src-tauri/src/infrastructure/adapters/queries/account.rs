@@ -1,4 +1,4 @@
-use crate::domain::aggregates::account::Account;
+use crate::domain::aggregates::queries::account::AccountQuery;
 use crate::domain::entities::operation::Operation;
 use crate::shared::types::array::Array;
 use crate::{
@@ -12,8 +12,8 @@ use crate::{
 pub struct AccountQueryRepository {}
 
 impl AccountQueryRepositoryPort for AccountQueryRepository {
-    fn get_account(&self) -> Account {
-        Account::new(
+    fn get_account(&self) -> AccountQuery {
+        AccountQuery::new(
             String::from("1"),
             Array::from_vec(vec![
                 Operation::new(

@@ -1,7 +1,7 @@
 use crate::domain::value_objects::operation_type::OperationType;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Serialize, Debug)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Operation {
     pub id: String,
     pub label: String,

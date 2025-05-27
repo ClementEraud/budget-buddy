@@ -3,7 +3,7 @@ use crate::{
     shared::types::array::Array,
 };
 
-pub trait FinancialAggregate {
+pub trait FinancialAggregateQuery {
     fn get_operations(&self) -> Array<Operation>;
 
     fn get_incomes(&self) -> Array<Operation> {

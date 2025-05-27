@@ -1,6 +1,8 @@
 use crate::{
     application::ports::queries::account::AccountQueryRepositoryPort,
-    domain::{traits::financial_aggregate::FinancialAggregate, value_objects::summary::Summary},
+    domain::{
+        traits::financial_aggregate::FinancialAggregateQuery, value_objects::summary::Summary,
+    },
 };
 
 pub struct GetAccountSummaryQuery<T: AccountQueryRepositoryPort> {
