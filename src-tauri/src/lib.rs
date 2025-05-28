@@ -1,31 +1,33 @@
 use std::fs::exists;
 
-use application::use_cases::{
-    commands::create_budget::CreateBudgetCommand,
-    queries::get_account_summary::GetAccountSummaryQuery,
+use commands::{
+    application::use_cases::create_budget::CreateBudgetCommand,
+    infrastructure::{
+        adapters::file_system::budget_adapter::BudgetRepositoryFSAdapter,
+        controllers::create_budget::create_budget,
+    },
 };
 use directories::ProjectDirs;
-use infrastructure::{
-    adapters::{
-        commands::budget::BudgetCommandRepositoryFSAdapter,
-        queries::account::AccountQueryRepository,
+use queries::{
+    application::use_cases::get_account_summary::GetAccountSummaryQuery,
+    infrastructure::{
+        adapters::in_memory::account_adapter::AccountRepositoryInMemoryAdapter,
+        controllers::get_account_summary::get_account_summary,
     },
-    controllers::{commands::create_budget, queries::get_account_summary},
 };
 use tauri::Manager;
 use tauri_plugin_fs::FsExt;
 
-mod application;
-mod domain;
-mod infrastructure;
+mod commands;
+mod queries;
 mod shared;
 
 pub struct Queries {
-    get_account_summary_query: GetAccountSummaryQuery<AccountQueryRepository>,
+    get_account_summary: GetAccountSummaryQuery<AccountRepositoryInMemoryAdapter>,
 }
 
 pub struct Commands {
-    create_budget_command: CreateBudgetCommand<BudgetCommandRepositoryFSAdapter>,
+    create_budget: CreateBudgetCommand<BudgetRepositoryFSAdapter>,
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -38,15 +40,13 @@ pub fn run() {
         .plugin(tauri_plugin_fs::init())
         .setup(|app| {
             app.manage(Queries {
-                get_account_summary_query: GetAccountSummaryQuery::new(
-                    AccountQueryRepository::new(),
+                get_account_summary: GetAccountSummaryQuery::new(
+                    AccountRepositoryInMemoryAdapter::new(),
                 ),
             });
 
             app.manage(Commands {
-                create_budget_command: CreateBudgetCommand::new(
-                    BudgetCommandRepositoryFSAdapter::new(),
-                ),
+                create_budget: CreateBudgetCommand::new(BudgetRepositoryFSAdapter::new()),
             });
 
             let scope = app.fs_scope();
