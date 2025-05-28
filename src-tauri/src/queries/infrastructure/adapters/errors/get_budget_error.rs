@@ -3,58 +3,43 @@ use std::fmt::Display;
 use std::fmt::Formatter;
 use std::fmt::Result;
 
-use crate::shared::errors::open_file_error::OpenFileError;
 use crate::shared::errors::read_file_error::ReadFileError;
 
-pub struct SaveBudgetError {
+pub struct GetBudgetError {
     error: String,
 }
 
-impl SaveBudgetError {
-    pub fn new(error: String) -> Self {
-        SaveBudgetError { error }
-    }
-}
-
-impl From<OpenFileError> for SaveBudgetError {
-    fn from(error: OpenFileError) -> Self {
-        SaveBudgetError {
-            error: error.to_string(),
-        }
-    }
-}
-
-impl From<ReadFileError> for SaveBudgetError {
+impl From<ReadFileError> for GetBudgetError {
     fn from(error: ReadFileError) -> Self {
-        SaveBudgetError {
+        GetBudgetError {
             error: error.to_string(),
         }
     }
 }
 
-impl From<serde_json::Error> for SaveBudgetError {
+impl From<serde_json::Error> for GetBudgetError {
     fn from(error: serde_json::Error) -> Self {
-        SaveBudgetError {
+        GetBudgetError {
             error: error.to_string(),
         }
     }
 }
 
-impl From<std::io::Error> for SaveBudgetError {
+impl From<std::io::Error> for GetBudgetError {
     fn from(error: std::io::Error) -> Self {
-        SaveBudgetError {
+        GetBudgetError {
             error: error.to_string(),
         }
     }
 }
 
-impl Display for SaveBudgetError {
+impl Display for GetBudgetError {
     fn fmt(&self, f: &mut Formatter) -> Result {
         write!(f, "Failed to save budget !")
     }
 }
 
-impl Debug for SaveBudgetError {
+impl Debug for GetBudgetError {
     fn fmt(&self, f: &mut Formatter) -> Result {
         write!(
             f,

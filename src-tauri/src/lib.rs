@@ -3,16 +3,23 @@ use std::fs::exists;
 use commands::{
     application::use_cases::create_budget::CreateBudgetCommand,
     infrastructure::{
-        adapters::file_system::budget_adapter::BudgetRepositoryFSAdapter,
+        adapters::file_system::budget_adapter::BudgetRepositoryFSAdapter as BudgetRepositoryCommandFSAdapter,
         controllers::create_budget::create_budget,
     },
 };
 use directories::ProjectDirs;
 use queries::{
-    application::use_cases::get_account_summary::GetAccountSummaryQuery,
+    application::use_cases::{
+        get_account_summary::GetAccountSummaryQuery, get_budget_for_date::GetBudgetForDate,
+    },
     infrastructure::{
-        adapters::in_memory::account_adapter::AccountRepositoryInMemoryAdapter,
-        controllers::get_account_summary::get_account_summary,
+        adapters::{
+            file_system::budget_adapter::BudgetRepositoryFSAdapter as BudgetRepositoryQueryFSAdapter,
+            in_memory::account_adapter::AccountRepositoryInMemoryAdapter,
+        },
+        controllers::{
+            get_account_summary::get_account_summary, get_budget_for_date::get_budget_for_date,
+        },
     },
 };
 use tauri::Manager;
@@ -23,10 +30,11 @@ mod shared;
 
 pub struct Queries {
     get_account_summary: GetAccountSummaryQuery<AccountRepositoryInMemoryAdapter>,
+    get_budget_for_date: GetBudgetForDate<BudgetRepositoryQueryFSAdapter>,
 }
 
 pub struct Commands {
-    create_budget: CreateBudgetCommand<BudgetRepositoryFSAdapter>,
+    create_budget: CreateBudgetCommand<BudgetRepositoryCommandFSAdapter>,
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -41,10 +49,11 @@ pub fn run() {
                 get_account_summary: GetAccountSummaryQuery::new(
                     AccountRepositoryInMemoryAdapter::new(),
                 ),
+                get_budget_for_date: GetBudgetForDate::new(BudgetRepositoryQueryFSAdapter::new()),
             });
 
             app.manage(Commands {
-                create_budget: CreateBudgetCommand::new(BudgetRepositoryFSAdapter::new()),
+                create_budget: CreateBudgetCommand::new(BudgetRepositoryCommandFSAdapter::new()),
             });
 
             let path;
@@ -66,7 +75,11 @@ pub fn run() {
             Ok(())
         })
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![get_account_summary, create_budget]);
+        .invoke_handler(tauri::generate_handler![
+            get_account_summary,
+            create_budget,
+            get_budget_for_date
+        ]);
 
     #[cfg(debug_assertions)]
     {

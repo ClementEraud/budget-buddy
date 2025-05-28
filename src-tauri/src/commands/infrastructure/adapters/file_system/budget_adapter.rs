@@ -1,56 +1,102 @@
-use std::{
-    fs::{File, OpenOptions},
-    io::Write,
-    path::PathBuf,
-};
+use std::io::{Seek, SeekFrom, Write};
 
-use directories::ProjectDirs;
-
-use crate::commands::{
-    application::ports::budget_repository::BudgetRepositoryPort,
-    domain::aggregates::budget::Budget,
-    infrastructure::adapters::errors::{
-        get_file_path_error::GetFilePathError, open_file_error::OpenFileError,
-        save_budget_error::SaveBudgetError,
+use crate::{
+    commands::{
+        application::ports::budget_repository::BudgetRepositoryPort,
+        domain::aggregates::budget::Budget,
+        infrastructure::adapters::errors::save_budget_error::SaveBudgetError,
     },
+    shared::adapters::file_system_adapter::FileSystemAdapter,
 };
 
-#[derive(Clone)]
 pub struct BudgetRepositoryFSAdapter {}
 
 impl BudgetRepositoryFSAdapter {
     pub fn new() -> Self {
         Self {}
     }
+}
 
-    fn get_file_path(&self) -> Result<PathBuf, GetFilePathError> {
-        match ProjectDirs::from("com", "BudgetBuddy", "BudgetBuddy") {
-            Some(proj_dirs) => Ok(proj_dirs.data_local_dir().to_path_buf()),
-            None => Err(GetFilePathError {
-                model: String::from("Budget"),
-            }),
-        }
-    }
-
-    fn open_file(&self) -> Result<File, OpenFileError> {
-        let file_path = self.get_file_path()?;
-
-        OpenOptions::new()
-            .create(true)
-            .append(true)
-            .open(file_path.join("budget.json"))
-            .map_err(OpenFileError::from)
+impl FileSystemAdapter for BudgetRepositoryFSAdapter {
+    fn filename(&self) -> String {
+        String::from("budget.json")
     }
 }
 
 impl BudgetRepositoryPort for BudgetRepositoryFSAdapter {
     fn create_budget(&self, budget: Budget) -> Result<(), SaveBudgetError> {
         let mut file = self.open_file()?;
-        let serialized_budget = serde_json::to_string(&budget).map_err(SaveBudgetError::from)?;
+        let file_content = self.read_file()?;
 
-        file.write_all(serialized_budget.as_bytes())
+        let mut existing_budgets: Vec<Budget> =
+            serde_json::from_str(&file_content).unwrap_or_default();
+
+        if existing_budgets.iter().any(|b| b.id() == budget.id()) {
+            return Err(SaveBudgetError::new(String::from("Budget already exists")));
+        }
+
+        existing_budgets.push(budget);
+
+        let serialized_budgets =
+            serde_json::to_string(&existing_budgets).map_err(SaveBudgetError::from)?;
+
+        file.seek(SeekFrom::Start(0))
+            .map_err(SaveBudgetError::from)?;
+
+        file.write_all(serialized_budgets.as_bytes())
             .map_err(SaveBudgetError::from)?;
 
         Ok(())
     }
 }
+
+// TO-DO: mock file system and add tests
+// #[cfg(test)]
+// mod tests {
+//     use crate::shared::{
+//         entities::operation::Operation,
+//         types::array::Array,
+//         value_objects::{
+//             budget_date::BudgetDate, expense_type::ExpenseType, income_type::IncomeType,
+//             operation_type::OperationType,
+//         },
+//     };
+
+//     use super::*;
+
+//     #[test]
+//     fn should_create_budget() {
+//         let repo = BudgetRepositoryFSAdapter::new();
+//         let budget = Budget::new(
+//             String::from("fasdf"),
+//             BudgetDate {
+//                 year: 2023,
+//                 month: 1,
+//             },
+//             Array::from_vec(vec![
+//                 Operation::new(
+//                     String::from("1"),
+//                     String::from("Salary"),
+//                     1600.0,
+//                     OperationType::Income(IncomeType::Salary),
+//                 ),
+//                 Operation::new(
+//                     String::from("3"),
+//                     String::from("Rent"),
+//                     600.0,
+//                     OperationType::Expense(ExpenseType::Housing),
+//                 ),
+//             ]),
+//         );
+//         repo.create_budget(budget).unwrap();
+
+//         let file_content = repo.read_file().unwrap();
+//         let existing_budgets: Vec<Budget> = serde_json::from_str(&file_content).unwrap_or_default();
+
+//         assert_eq!(existing_budgets.len(), 1);
+//         assert_eq!(existing_budgets[0].id(), String::from("fasdf"));
+//         assert_eq!(existing_budgets[0].date().year, 2023);
+//         assert_eq!(existing_budgets[0].date().month, 1);
+//         assert_eq!(existing_budgets[0].operations().length(), 2);
+//     }
+// }

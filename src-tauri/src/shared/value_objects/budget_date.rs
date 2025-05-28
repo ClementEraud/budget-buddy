@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct BudgetDate {
-    year: u16,
-    month: u8,
+    pub year: u16,
+    pub month: u8,
 }

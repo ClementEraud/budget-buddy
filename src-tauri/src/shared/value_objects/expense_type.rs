@@ -1,7 +1,6 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
-#[allow(dead_code)]
 pub enum ExpenseType {
     Food,
     Transportation,

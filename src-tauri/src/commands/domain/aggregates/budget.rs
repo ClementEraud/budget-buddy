@@ -4,7 +4,7 @@ use crate::shared::{
     entities::operation::Operation, types::array::Array, value_objects::budget_date::BudgetDate,
 };
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Budget {
     id: String,
     date: BudgetDate,
@@ -18,5 +18,9 @@ impl Budget {
             date,
             operations,
         }
+    }
+
+    pub fn id(&self) -> &str {
+        &self.id
     }
 }

@@ -47,4 +47,8 @@ impl<T: Serialize> Array<T> {
             .iter()
             .fold(initial, |acc, item| reducer(item, &acc))
     }
+
+    pub fn length(&self) -> usize {
+        self.items.len()
+    }
 }
