@@ -16,7 +16,6 @@ use queries::{
     },
 };
 use tauri::Manager;
-use tauri_plugin_fs::FsExt;
 
 mod commands;
 mod queries;
@@ -37,7 +36,6 @@ pub fn run() {
 
     #[allow(unused_mut)]
     let mut builder = tauri::Builder::default()
-        .plugin(tauri_plugin_fs::init())
         .setup(|app| {
             app.manage(Queries {
                 get_account_summary: GetAccountSummaryQuery::new(
@@ -49,7 +47,6 @@ pub fn run() {
                 create_budget: CreateBudgetCommand::new(BudgetRepositoryFSAdapter::new()),
             });
 
-            let scope = app.fs_scope();
             let path;
 
             match ProjectDirs::from("com", "BudgetBuddy", "BudgetBuddy") {
@@ -57,10 +54,6 @@ pub fn run() {
                 None => panic!("Failed to get home directory"),
             };
 
-            match scope.allow_directory(path.as_os_str(), false) {
-                Ok(_) => (),
-                Err(e) => panic!("Error allowing directory: {}", e),
-            };
             dbg!("Using directory to save data: {}", path.display());
 
             // Create directory if it doesn't exist
