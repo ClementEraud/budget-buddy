@@ -1,24 +1,12 @@
 <script lang="ts">
     import moment from "moment";
+    import { Heading } from "flowbite-svelte";
 
     const monthToDisplay = moment().format("MMMM YYYY");
 </script>
 
-<div class="top-header">
-    <h1>Budget Buddy</h1>
+<div class="flex justify-between items-center p-4 bg-primary-100 dark:bg-primary-800 rounded-lg shadow-sm mb-6">
+    <Heading tag="h1" class="text-primary-700 dark:text-primary-300 font-lobster">Budget Buddy</Heading>
     <div></div>
-    <h2>{monthToDisplay}</h2>
+    <Heading tag="h2" class="text-secondary-600 dark:text-secondary-400">{monthToDisplay}</Heading>
 </div>
-
-<style>
-    .top-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem;
-
-        h1 {
-            text-align: left;
-        }
-    }
-</style>

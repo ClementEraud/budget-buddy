@@ -2,6 +2,7 @@
     import type { Summary } from "../domain/types/summary";
     import Balance from "./Balance.svelte";
     import OperationsComponent from "./operations/Operations.svelte";
+    import { Heading } from "flowbite-svelte";
 
     const {
         summary,
@@ -12,22 +13,28 @@
     } = $props();
 </script>
 
-<div class="account-container">
-    <h2>{title}</h2>
+<div class="h-full flex flex-col w-1/2 justify-center items-center">
+    <Heading tag="h2" class="text-primary-300 dark:text-primary-300 mb-8"
+        >{title}</Heading
+    >
 
-    <div class="balance-container">
+    <div class="mb-8">
         <Balance balance={summary.balance} />
     </div>
 
-    <div class="operations">
-        <div class="operation-container incomes">
+    <div class="w-full h-full flex justify-evenly flex-row flex-grow">
+        <div
+            class="w-2/5 h-full flex flex-col border border-gray-400 dark:border-gray-600 rounded-lg shadow-sm bg-white dark:bg-gray-800"
+        >
             <OperationsComponent
                 title="Incomes"
                 operations={summary.incomes}
                 total={summary.totalIncome}
             />
         </div>
-        <div class="operation-container expenses">
+        <div
+            class="w-2/5 h-full flex flex-col border border-gray-400 dark:border-gray-600 rounded-lg shadow-sm bg-white dark:bg-gray-800"
+        >
             <OperationsComponent
                 title="Expenses"
                 operations={summary.expenses}
@@ -36,47 +43,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .account-container {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        width: 50%;
-        justify-content: center;
-        align-items: center;
-
-        h2 {
-            margin-bottom: 30px;
-        }
-
-        .balance-container {
-            margin-bottom: 30px;
-        }
-
-        .operations {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: space-evenly;
-            flex-direction: row;
-            flex-grow: 1;
-
-            .operation-container {
-                border: 1px solid #514c4c;
-                border-radius: 5px;
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .incomes {
-                width: 40%;
-            }
-
-            .expenses {
-                width: 40%;
-            }
-        }
-    }
-</style>
