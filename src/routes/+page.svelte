@@ -8,13 +8,9 @@
 
 <main class="container">
     <Header />
-
     <div class="financial-entities">
-        {#await data.accountSummary then accountSummary}
-            <FinancialEntity title="Budget" summary={accountSummary} />
-
-            <FinancialEntity title="Account" summary={accountSummary} />
-        {/await}
+        <FinancialEntity title="Budget" summary={data.currentBudgetSummary} />
+        <FinancialEntity title="Account" summary={data.accountSummary} />
     </div>
 </main>
 

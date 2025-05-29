@@ -89,14 +89,5 @@ impl BudgetRepositoryPort for BudgetRepositoryFSAdapter {
 //             ]),
 //         );
 //         repo.create_budget(budget).unwrap();
-
-//         let file_content = repo.read_file().unwrap();
-//         let existing_budgets: Vec<Budget> = serde_json::from_str(&file_content).unwrap_or_default();
-
-//         assert_eq!(existing_budgets.len(), 1);
-//         assert_eq!(existing_budgets[0].id(), String::from("fasdf"));
-//         assert_eq!(existing_budgets[0].date().year, 2023);
-//         assert_eq!(existing_budgets[0].date().month, 1);
-//         assert_eq!(existing_budgets[0].operations().length(), 2);
 //     }
 // }

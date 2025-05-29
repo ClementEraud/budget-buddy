@@ -1,30 +1,27 @@
 import { invoke } from "@tauri-apps/api/core";
-import { Budget } from "../../../domain/types/budget";
-import type { ApiBudgetRaw } from "../types";
+import type { ApiSummaryRaw } from "../types";
 import type { Nullable } from "../../../shared/types";
+import type { Summary } from "../../../domain/types/summary";
+import { fromRawSummaryToDomainSummary } from "../utils";
 
 export class ApiQueryBudget {
-  static async getCurrentBudget(): Promise<Nullable<Budget>> {
-    return this.getBudgetForDate({
+  static async getCurrentBudgetSummary(): Promise<Nullable<Summary>> {
+    return this.getBudgetSummaryForDate({
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
     });
   }
 
-  private static async getBudgetForDate(date: {
+  static async getBudgetSummaryForDate(date: {
     year: number;
     month: number;
-  }): Promise<Nullable<Budget>> {
-    const budget = await invoke<ApiBudgetRaw>("get_budget_for_date", { date });
-    if (!budget) return null;
-    return ApiQueryBudget.fromRawResultToDomain(budget);
-  }
+  }): Promise<Nullable<Summary>> {
+    const budget = await invoke<ApiSummaryRaw>("get_budget_summary_for_date", {
+      date,
+    });
 
-  private static fromRawResultToDomain(rawResult: ApiBudgetRaw): Budget {
-    return {
-      id: rawResult.id,
-      date: rawResult.date,
-      operations: rawResult.operations.items,
-    };
+    if (!budget) return null;
+
+    return fromRawSummaryToDomainSummary(budget);
   }
 }

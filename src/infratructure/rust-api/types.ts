@@ -9,12 +9,3 @@ export type ApiSummaryRaw = {
   total_expense: number;
   balance: number;
 };
-
-export type ApiBudgetRaw = {
-  id: string;
-  date: {
-    year: number;
-    month: number;
-  };
-  operations: ApiOperationsRaw;
-};

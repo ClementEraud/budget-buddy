@@ -4,14 +4,16 @@ import { ApiQueryAccount } from "../infratructure/rust-api/queries/account";
 import { redirect } from "@sveltejs/kit";
 
 export const load: PageLoad = async () => {
-  const currentBudget = await ApiQueryBudget.getCurrentBudget();
+  const currentBudgetSummary = await ApiQueryBudget.getCurrentBudgetSummary();
 
-  if (!currentBudget) {
+  if (!currentBudgetSummary) {
     redirect(308, "/budget/new");
   }
 
+  const accountSummary = await ApiQueryAccount.getAccountSummary();
+
   return {
-    accountSummary: ApiQueryAccount.getAccountSummary(),
-    currentBudget,
+    accountSummary,
+    currentBudgetSummary,
   };
 };
