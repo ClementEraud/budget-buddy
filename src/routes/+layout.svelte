@@ -1,6 +1,6 @@
 <script>
     import "@fontsource/lobster";
-    import "../global.scss";
+    import "../app.css";
 
     let { children } = $props();
 </script>

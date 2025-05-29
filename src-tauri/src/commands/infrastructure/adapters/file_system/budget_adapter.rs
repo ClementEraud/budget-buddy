@@ -51,43 +51,43 @@ impl BudgetRepositoryPort for BudgetRepositoryFSAdapter {
 }
 
 // TO-DO: mock file system and add tests
-// #[cfg(test)]
-// mod tests {
-//     use crate::shared::{
-//         entities::operation::Operation,
-//         types::array::Array,
-//         value_objects::{
-//             budget_date::BudgetDate, expense_type::ExpenseType, income_type::IncomeType,
-//             operation_type::OperationType,
-//         },
-//     };
+#[cfg(test)]
+mod tests {
+    use crate::shared::{
+        entities::operation::Operation,
+        types::array::Array,
+        value_objects::{
+            budget_date::BudgetDate, expense_type::ExpenseType, income_type::IncomeType,
+            operation_type::OperationType,
+        },
+    };
 
-//     use super::*;
+    use super::*;
 
-//     #[test]
-//     fn should_create_budget() {
-//         let repo = BudgetRepositoryFSAdapter::new();
-//         let budget = Budget::new(
-//             String::from("fasdf"),
-//             BudgetDate {
-//                 year: 2023,
-//                 month: 1,
-//             },
-//             Array::from_vec(vec![
-//                 Operation::new(
-//                     String::from("1"),
-//                     String::from("Salary"),
-//                     1600.0,
-//                     OperationType::Income(IncomeType::Salary),
-//                 ),
-//                 Operation::new(
-//                     String::from("3"),
-//                     String::from("Rent"),
-//                     600.0,
-//                     OperationType::Expense(ExpenseType::Housing),
-//                 ),
-//             ]),
-//         );
-//         repo.create_budget(budget).unwrap();
-//     }
-// }
+    #[test]
+    fn should_create_budget() {
+        let repo = BudgetRepositoryFSAdapter::new();
+        let budget = Budget::new(
+            String::from("fasdf"),
+            BudgetDate {
+                year: 2025,
+                month: 5,
+            },
+            Array::from_vec(vec![
+                Operation::new(
+                    String::from("1"),
+                    String::from("Salary"),
+                    1600.0,
+                    OperationType::Income(IncomeType::Salary),
+                ),
+                Operation::new(
+                    String::from("3"),
+                    String::from("Rent"),
+                    600.0,
+                    OperationType::Expense(ExpenseType::Housing),
+                ),
+            ]),
+        );
+        repo.create_budget(budget).unwrap();
+    }
+}

@@ -35,7 +35,7 @@ impl From<std::io::Error> for GetBudgetError {
 
 impl Display for GetBudgetError {
     fn fmt(&self, f: &mut Formatter) -> Result {
-        write!(f, "Failed to save budget !")
+        write!(f, "Failed to get budget !")
     }
 }
 

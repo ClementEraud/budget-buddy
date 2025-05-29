@@ -1,0 +1,78 @@
+@import "tailwindcss";
+@plugin 'flowbite/plugin';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    /* Refreshing mint - unique primary color */
+    --color-primary-50: #effef9;
+    --color-primary-100: #d0fdef;
+    --color-primary-200: #a3f9df;
+    --color-primary-300: #6eefd0;
+    --color-primary-400: #43dbbe;
+    --color-primary-500: #21c6ac;
+    --color-primary-600: #149c8a;
+    --color-primary-700: #137d6f;
+    --color-primary-800: #13625a;
+    --color-primary-900: #11514b;
+    --color-primary-950: #053231;
+
+    /* Soft peach - warm secondary color */
+    --color-secondary-50: #fff5f0;
+    --color-secondary-100: #ffe9df;
+    --color-secondary-200: #ffd2be;
+    --color-secondary-300: #ffb495;
+    --color-secondary-400: #fd8c64;
+    --color-secondary-500: #f86e3e;
+    --color-secondary-600: #ea4f1a;
+    --color-secondary-700: #c33e15;
+    --color-secondary-800: #9c3517;
+    --color-secondary-900: #7e3017;
+    --color-secondary-950: #44170a;
+
+    /* Rich violet - distinctive accent color */
+    --color-accent-50: #f4f0fe;
+    --color-accent-100: #ebe2fd;
+    --color-accent-200: #d9cbfa;
+    --color-accent-300: #bea6f6;
+    --color-accent-400: #9f78ef;
+    --color-accent-500: #8652e5;
+    --color-accent-600: #733bd8;
+    --color-accent-700: #6230bc;
+    --color-accent-800: #512999;
+    --color-accent-900: #44257c;
+    --color-accent-950: #290f55;
+}
+
+@source "../node_modules/flowbite-svelte/dist";
+@source "../node_modules/flowbite-svelte-icons/dist";
+
+@layer base {
+    /* disable chrome cancel button */
+    input[type="search"]::-webkit-search-cancel-button {
+        display: none;
+    }
+}
+
+html {
+    font-family: "Lobster", system-ui;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+
+    color: #0f0f0f;
+    background-color: #fdfcfa;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        color: #f6f6f6;
+        background-color: #1e293b;
+    }
+}
