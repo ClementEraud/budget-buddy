@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Balance from "../components/Balance.svelte";
     import Header from "../components/Header.svelte";
     import FinancialEntity from "../components/FinancialEntity.svelte";
     import type { PageProps } from "./$types";

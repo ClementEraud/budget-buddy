@@ -1,5 +1,4 @@
 <script lang="ts">
-    import type { Operations } from "../domain/types/operation";
     import type { Summary } from "../domain/types/summary";
     import Balance from "./Balance.svelte";
     import OperationsComponent from "./operations/Operations.svelte";
