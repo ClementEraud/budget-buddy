@@ -7,7 +7,8 @@ use crate::{
         entities::operation::Operation,
         types::array::Array,
         value_objects::{
-            expense_type::ExpenseType, income_type::IncomeType, operation_type::OperationType,
+            budget_date::BudgetDate, expense_type::ExpenseType, income_type::IncomeType,
+            operation_type::OperationType,
         },
     },
 };
@@ -16,9 +17,10 @@ use crate::{
 pub struct AccountRepositoryInMemoryAdapter {}
 
 impl AccountRepositoryPort for AccountRepositoryInMemoryAdapter {
-    fn get_account(&self) -> Account {
-        Account::new(
+    fn get_account_for_date(&self, date: &BudgetDate) -> Option<Account> {
+        Some(Account::new(
             String::from("1"),
+            date.clone(),
             Array::from_vec(vec![
                 Operation::new(
                     String::from("1"),
@@ -75,7 +77,7 @@ impl AccountRepositoryPort for AccountRepositoryInMemoryAdapter {
                     OperationType::Expense(ExpenseType::Food),
                 ),
             ]),
-        )
+        ))
     }
 }
 

@@ -10,7 +10,7 @@ use commands::{
 use directories::ProjectDirs;
 use queries::{
     application::use_cases::{
-        get_account_summary::GetAccountSummaryQuery,
+        get_account_summary_for_date::GetAccountSummaryForDate,
         get_budget_summary_for_date::GetBudgetSummaryForDate,
     },
     infrastructure::{
@@ -19,7 +19,7 @@ use queries::{
             in_memory::account_adapter::AccountRepositoryInMemoryAdapter,
         },
         controllers::{
-            get_account_summary::get_account_summary,
+            get_account_summary_for_date::get_account_summary_for_date,
             get_budget_summary_for_date::get_budget_summary_for_date,
         },
     },
@@ -31,7 +31,7 @@ mod queries;
 mod shared;
 
 pub struct Queries {
-    get_account_summary: GetAccountSummaryQuery<AccountRepositoryInMemoryAdapter>,
+    get_account_summary_for_date: GetAccountSummaryForDate<AccountRepositoryInMemoryAdapter>,
     get_budget_summary_for_date: GetBudgetSummaryForDate<BudgetRepositoryQueryFSAdapter>,
 }
 
@@ -48,7 +48,7 @@ pub fn run() {
     let mut builder = tauri::Builder::default()
         .setup(|app| {
             app.manage(Queries {
-                get_account_summary: GetAccountSummaryQuery::new(
+                get_account_summary_for_date: GetAccountSummaryForDate::new(
                     AccountRepositoryInMemoryAdapter::new(),
                 ),
                 get_budget_summary_for_date: GetBudgetSummaryForDate::new(
@@ -80,7 +80,7 @@ pub fn run() {
         })
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
-            get_account_summary,
+            get_account_summary_for_date,
             create_budget,
             get_budget_summary_for_date
         ]);

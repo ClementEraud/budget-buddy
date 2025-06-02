@@ -11,8 +11,23 @@
     <Card class="my-4">
         <Header />
     </Card>
-    <div class="flex flex-row justify-between items-center h-full">
-        <FinancialEntity title="Budget" summary={data.currentBudgetSummary} />
-        <FinancialEntity title="Account" summary={data.accountSummary} />
+
+    <!-- TODO: Handle when there is no account, a simple button should propose to create an account -->
+    <div class="mt-10 flex flex-row justify-between items-center h-full">
+        <div class={data.accountSummary ? "w-1/2 h-full" : "w-full h-full"}>
+            <FinancialEntity
+                title="Budget"
+                summary={data.currentBudgetSummary}
+            />
+        </div>
+
+        {#if data.accountSummary}
+            <div class="w-1/2 h-full">
+                <FinancialEntity
+                    title="Account"
+                    summary={data.accountSummary}
+                />
+            </div>
+        {/if}
     </div>
 </main>

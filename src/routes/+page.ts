@@ -10,7 +10,7 @@ export const load: PageLoad = async () => {
     redirect(308, "/budget/new");
   }
 
-  const accountSummary = await ApiQueryAccount.getAccountSummary();
+  const accountSummary = await ApiQueryAccount.getCurrentAccountSummary();
 
   return {
     accountSummary,
