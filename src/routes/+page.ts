@@ -12,6 +12,11 @@ export const load: PageLoad = async () => {
 
   const accountSummary = await ApiQueryAccount.getCurrentAccountSummary();
 
+  // TODO: Handle this error with a more user-friendly message
+  if (!accountSummary) {
+    throw new Error("Budget found but no account");
+  }
+
   return {
     accountSummary,
     currentBudgetSummary,
